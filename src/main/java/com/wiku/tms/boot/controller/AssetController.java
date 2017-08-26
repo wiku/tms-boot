@@ -27,30 +27,41 @@ public class AssetController
     }
 
     @RequestMapping(value = "assets/{id}", method = RequestMethod.GET)
-    public Asset get(@PathVariable Integer id)
+    public Asset get(@PathVariable Integer id) throws ResourceNotFoundException
     {
-        return repository.findOne(id);
+        Asset asset = repository.findOne(id);
+        if (asset == null)
+            throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
+        return asset;
     }
 
     @RequestMapping(value = "assets", method = RequestMethod.POST)
     public Asset create(@RequestBody Asset asset)
     {
-        return repository.save(asset);
+        return repository.saveAndFlush(asset);
     }
 
     @RequestMapping(value = "assets/{id}", method = RequestMethod.PUT)
-    public Asset update(@PathVariable Integer id, @RequestBody Asset asset)
+    public Asset update(@PathVariable Integer id, @RequestBody Asset asset) throws ResourceNotFoundException
     {
         Asset assetToUpdate = repository.findOne(id);
+        if (assetToUpdate == null)
+            throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
+
         BeanUtils.copyProperties(asset, assetToUpdate);
         return repository.saveAndFlush(assetToUpdate);
+
     }
 
     @RequestMapping(value = "assets/{id}", method = RequestMethod.DELETE)
-    public Asset delete(@PathVariable Integer id)
+    public Asset delete(@PathVariable Integer id) throws ResourceNotFoundException
     {
         Asset assetToDelete = repository.findOne(id);
+        if (assetToDelete == null)
+            throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
+        
         repository.delete(id);
         return assetToDelete;
     }
+
 }
