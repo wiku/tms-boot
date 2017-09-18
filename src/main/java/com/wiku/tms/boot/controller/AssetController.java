@@ -50,7 +50,6 @@ public class AssetController
 
         BeanUtils.copyProperties(asset, assetToUpdate);
         return repository.saveAndFlush(assetToUpdate);
-
     }
 
     @RequestMapping(value = "assets/{id}", method = RequestMethod.DELETE)
@@ -59,7 +58,6 @@ public class AssetController
         Asset assetToDelete = repository.findOne(id);
         if (assetToDelete == null)
             throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
-        
         repository.delete(id);
         return assetToDelete;
     }
