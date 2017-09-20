@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wiku.tms.boot.model.Asset;
+import com.wiku.tms.boot.model.assets.Asset;
 import com.wiku.tms.boot.repository.AssetRepository;
 
 @RestController

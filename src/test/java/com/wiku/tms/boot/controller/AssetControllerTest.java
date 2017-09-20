@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.wiku.tms.boot.model.Asset;
+import com.wiku.tms.boot.model.assets.Asset;
 import com.wiku.tms.boot.repository.AssetRepository;
 
 public class AssetControllerTest
