@@ -30,8 +30,10 @@ public class AssetController
     public Asset get(@PathVariable Integer id) throws ResourceNotFoundException
     {
         Asset asset = repository.findOne(id);
+     
         if (asset == null)
             throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
+        
         return asset;
     }
 
@@ -45,6 +47,7 @@ public class AssetController
     public Asset update(@PathVariable Integer id, @RequestBody Asset asset) throws ResourceNotFoundException
     {
         Asset assetToUpdate = repository.findOne(id);
+        
         if (assetToUpdate == null)
             throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
 
@@ -56,8 +59,10 @@ public class AssetController
     public Asset delete(@PathVariable Integer id) throws ResourceNotFoundException
     {
         Asset assetToDelete = repository.findOne(id);
+        
         if (assetToDelete == null)
-            throw new ResourceNotFoundException(String.format("Asset id=%d does not exist", id));
+            throw new ResourceNotFoundException(String.format("Asset with id=%d does not exist", id));
+        
         repository.delete(id);
         return assetToDelete;
     }
