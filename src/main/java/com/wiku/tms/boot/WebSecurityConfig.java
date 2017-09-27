@@ -31,12 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/assets", "/assets/**")
-                .hasAnyRole("ADMIN", "USER")
-                .antMatchers("/users")
-                .hasAnyRole("ADMIN")
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/api/v1/users/**")
+                .hasRole("ADMIN")
+                .antMatchers("/api/v1/assets/**")
+                .hasAnyRole("USER", "ADMIN")
                 .and()
                 .httpBasic();
     }
@@ -55,11 +53,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
             @Override
             public UserDetails loadUserByUsername( String username ) throws UsernameNotFoundException
             {
-                System.out.println("Loading user by name " + username);
                 UserAccount user = userRepository.findByUsername(username);
                 return new org.springframework.security.core.userdetails.User(user.getUsername(),
                         user.getPassword(),
-                        AuthorityUtils.createAuthorityList("USER"));
+                        AuthorityUtils.createAuthorityList("ROLE_" + user.getRole()));
             }
         };
 
