@@ -28,15 +28,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure( HttpSecurity http ) throws Exception
     {
-        http.csrf()
-                .disable()
+        http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/h2/**").permitAll()
                 .antMatchers("/api/v1/users/**")
                 .hasRole("ADMIN")
-                .antMatchers("/api/v1/assets/**")
+                .antMatchers("/api/v1/assets/**", "/api/v1/employees/**")
                 .hasAnyRole("USER", "ADMIN")
                 .and()
                 .httpBasic();
+        
+//        userRepository.saveAndFlush(new UserAccount("test", "test", "USER"));
     }
 
     @Autowired
